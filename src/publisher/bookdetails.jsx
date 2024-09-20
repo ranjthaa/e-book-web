@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css'; // Core styles
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const SingleBook = () => {
     const { book_id } = useParams(); // Capture book_id from the URL
     const [bookDetails, setBookDetails] = useState(null);
+    const [showPdf, setShowPdf] = useState(false); // For showing PDF inline
+    const [pdfUrl, setPdfUrl] = useState(""); // For storing the PDF URL
     const navigate = useNavigate(); // For navigation after deletion
+
+    const defaultLayoutPluginInstance = defaultLayoutPlugin(); // PDF Viewer plugin
 
     useEffect(() => {
         if (book_id) {
@@ -56,6 +64,21 @@ const SingleBook = () => {
         }
     };
 
+    // Handle reading the full book PDF inline
+    const handleReadBookClick = () => {
+        if (bookDetails && bookDetails.book_pdf) {
+            setPdfUrl(bookDetails.book_pdf); // Set the full book PDF URL
+            setShowPdf(true); // Show the PDF viewer
+        } else {
+            console.error("Book PDF not available.");
+        }
+    };
+
+    // Close the PDF viewer
+    const handleClosePdf = () => {
+        setShowPdf(false);
+    };
+
     return (
         <section>
             <div className="container">
@@ -75,10 +98,8 @@ const SingleBook = () => {
                             <p><strong>Status:</strong> {bookDetails.status}</p>
                             <div className="ookred">
                                 <div>
-                                    <button className="omed">
-                                        <a href={bookDetails.book_pdf} className="ancre-re-demo" target="_blank" rel="noopener noreferrer">
-                                            Read Book
-                                        </a>
+                                    <button className="omed" onClick={handleReadBookClick}>
+                                        Read Book
                                     </button>
                                 </div>
                                 <div>
@@ -93,6 +114,21 @@ const SingleBook = () => {
                     <p>Loading book details...</p>
                 )}
             </div>
+
+            {/* PDF Viewer for full book */}
+            {showPdf && (
+                <div className="pdf-viewer-overlay">
+                    <div className="pdf-viewer-content">
+                        <button className="close-btn" onClick={handleClosePdf}>Close</button>
+                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+                            <Viewer
+                                fileUrl={pdfUrl} // Use the pdfUrl state for showing the full book PDF
+                                plugins={[defaultLayoutPluginInstance]}
+                            />
+                        </Worker>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

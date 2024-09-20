@@ -16,8 +16,15 @@ app.get('/', (req, res)=>{res.send("E-Book")});
 app.use('/asserts', express.static("../backend/src/publisher/uploads/profile_images/"));
 app.use('/books', express.static("../backend/src/publisher/uploads/books"));
 app.use('/cover_image', express.static("../backend/src/publisher/uploads/cover_image"));
-app.use('/demo_page', express.static("../backend/src/publisher/uploads/emo_file"));
+app.use('/demo_page', express.static("../backend/src/publisher/uploads/demo_file"));
 app.use('/category_image', express.static('../backend/src/publisher/uploads/category_images'));
+
+
+// app.use('/asserts', express.static("../E-Book-Web/backend/src/publisher/uploads/profile_images/"));
+// app.use('/books', express.static("../E-Book-Web/backend/src/publisher/uploads/books"));
+// app.use('/cover_image', express.static("../backend/src/publisher/uploads/cover_image"));
+// app.use('/demo_page', express.static("../backend/src/publisher/uploads/demo_file"));
+// app.use('/category_image', express.static('../backend/src/publisher/uploads/category_images'));
 
 app.use('/user', user);
 app.use('/admin', admin);

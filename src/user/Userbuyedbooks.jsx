@@ -38,7 +38,7 @@ const Userbuyedbooks = () => {
                     <img className="bookfront-img" src={book.book_cover_image} alt={book.auther_name} />
                   </center>
                   <center>
-                    <h4 className="chaitary">{book.auther_name}</h4>
+                    <h4 className="chaitary">{book.book_titile}</h4>
                   </center>
                 </div>
               </Link>

@@ -41,7 +41,7 @@ const Adminpublisherbook = () => {
                             <Link className="crinology" to={`/adminviewbook/${book.book_id}`}>
                                 <div className="bookfront-layout">
                                     <center><img className="bookfront-img" src={book.book_cover_image} alt={book.book_name} /></center>
-                                    <center><h4 className="chaitary">{book.book_name}</h4></center>
+                                    <center><h4 className="chaitary">{book.book_titile}</h4></center>
                                 </div>
                             </Link>
                         </div>

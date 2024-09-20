@@ -72,7 +72,7 @@ const getPurchesedBooks = (req, res) => {
             book.transaction_id         = element.transaction_id;
             book.publisher_id           = element.publisher_id;
             book.publisher_name         = element.publisher_name;
-            book.book_title             = element.book_title;
+            book.book_titile             = element.book_titile;
             book.book_description       = element.book_description;
             book.book_cover_image       = SITE_COVER_IMAGE_URL + element.book_cover_image;
             book.demo_book              = SITE_DEMO_BOOK_URL   + element.demo_file;

@@ -22,6 +22,8 @@ import Usersavedbooks from './user/usersavedbooks.jsx';
 import Userbuyedbooks from './user/Userbuyedbooks.jsx';
 import Adminviewbook from './admin/adminviewbook.jsx';
 import Publisherbuyedbooks from './publisher/buyedbooks.jsx';
+import Addcategory from './publisher/addcategory.jsx';
+import CategoryBooks from './user/categorybooks.js';
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -39,6 +41,33 @@ function App() {
     }
     setLoading(false); // Loading is done
   }, []);
+
+  // useEffect(() => {
+  //   const handleContextMenu = (e) => e.preventDefault();
+  //   document.addEventListener('contextmenu', handleContextMenu);
+
+  //   return () => {
+  //     document.removeEventListener('contextmenu', handleContextMenu);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   const handleBlur = () => {
+  //     document.body.style.filter = 'blur(8px)';
+  //   };
+
+  //   const handleFocus = () => {
+  //     document.body.style.filter = 'none';
+  //   };
+
+  //   window.addEventListener('blur', handleBlur);
+  //   window.addEventListener('focus', handleFocus);
+
+  //   return () => {
+  //     window.removeEventListener('blur', handleBlur);
+  //     window.removeEventListener('focus', handleFocus);
+  //   };
+  // }, []);
 
   const handleLogin = (userData) => {
     const role = userData.user_type === 111 ? 'admin' :
@@ -81,7 +110,6 @@ function App() {
             <Route path="/adminrevived" element={<Adminrevived />} />
             <Route path="/adminpublisherbook/:publisherId" element={<Adminpublisherbook />} />
             <Route path="/adminviewbook/:book_id" element={<Adminviewbook />} />
-
           </>
         )}
 
@@ -89,6 +117,7 @@ function App() {
         {userRole === 'publisher' && (
           <>
             <Route path="/publisherhome" element={<Publisherhome />} />
+            <Route path="/addcategory" element={<Addcategory />} />
             <Route path="/publishebook" element={<Publishebook />} />
             <Route path="/book/:book_id" element={<SingleBook />} />
             <Route path="/userbuyedbooks" element={<Publisherbuyedbooks />} />
@@ -99,10 +128,10 @@ function App() {
         {userRole === 'user' && (
           <>
             <Route path="/userhome" element={<Userhome />} />
+            <Route path="/category/:category_name" element={<CategoryBooks />} />
             <Route path="/userviewbook/:book_id" element={<Userviewbook />} />
             <Route path="/usersavedbooks" element={<Usersavedbooks />} />
             <Route path="/userbuyedbooks" element={<Userbuyedbooks />} />
-           
           </>
         )}
 

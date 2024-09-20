@@ -1,49 +1,69 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Userhome = () => {
-  const [books, setBooks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch books from the API
-    const fetchBooks = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await axios.post("http://localhost:2000/user/get_books?category_name=ALL");
+        const response = await axios.post("http://localhost:2000/publisher/get_category");
         console.log(response);
         
-        if (response.status === 200) {
-          setBooks(response.data.data); // Set the books in state
+        console.log("API Response:", response.data);  // Log the response to check the structure
+        
+        if (response.status === 200 && response.data.data) {
+          setCategories(response.data.data); // Set the categories in state
         } else {
-          console.error("Failed to fetch books");
+          console.error("Failed to fetch categories: ", response.data.message);
         }
       } catch (error) {
-        console.error("Error fetching books:", error);
+        console.error("Error fetching categories:", error);
       }
     };
 
-    fetchBooks(); // Call the function to fetch books
-  }, []); // Empty dependency array ensures this runs once when component mounts
+    fetchCategories(); // Call the function to fetch categories
+  }, []);
+
+  // Handle the click when a category is selected
+  const handleCategoryClick = (category_name) => {
+    navigate(`/category/${category_name}`); // Navigate to the category page
+  };
 
   return (
     <section>
       <div className="container">
-        <h3 className="bros-bok">Browse your Books</h3>
+        <h3 className="bros-bok">Browse by Categories</h3>
         <div className="row">
-          {books.map((book) => (
-            <div key={book.book_id} className="col-4 layout-hei">
-              <Link className="chaiartart" to={`/userviewbook/${book.book_id}`}>
-                <div className="bookfront-layout">
+          {/* Button to show all books */}
+          <div className="col-12">
+            <button 
+              className="btn btn-primary mb-3"
+              onClick={() => handleCategoryClick("ALL")}
+            >
+              View All Books
+            </button>
+          </div>
+
+          {/* Display category cards */}
+          {categories.length > 0 ? (
+            categories.map((category) => (
+              <div key={category.category_id} className="col-4 layout-hei">
+                <div className="bookfront-layout" onClick={() => handleCategoryClick(category.category_name)}>
                   <center>
-                    <img className="bookfront-img" src={book.book_cover_image} alt={book.auther_name} />
+                    <img className="bookfront-img" src={category.category_image} alt={category.category_name} />
                   </center>
                   <center>
-                    <h4 className="chaitary">{book.auther_name}</h4>
+                    <h4 className="chaitary">{category.category_name}</h4>
                   </center>
                 </div>
-              </Link>
-            </div>
-          ))}
+              </div>
+            ))
+          ) : (
+            <p>No categories found</p> // Show message if categories array is empty
+          )}
         </div>
       </div>
     </section>

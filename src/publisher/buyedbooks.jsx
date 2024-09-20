@@ -30,7 +30,7 @@ const Publisherbuyedbooks = () => {
   return (
     <section>
       <div className="container">
-        <center><h3 className="section-cate-front">Published Books</h3></center>
+        <center><h3 className="section-cate-front">Buyed Books</h3></center>
         <div className="row">
           {books.length > 0 ? (
             books.map((book, index) => {
@@ -46,7 +46,7 @@ const Publisherbuyedbooks = () => {
                           src={book.book_cover_image || "path/to/fallback-image.jpg"}
                           alt={book.book_description || "No description available"}
                         />
-                        <h4 className="chaitary">{book.book_description || "No Title Available"}</h4>
+                        <h4 className="chaitary">{book.book_titile || "No Title Available"}</h4>
                       </Link>
                     </center>
                   </div>

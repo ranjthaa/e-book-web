@@ -46,7 +46,7 @@ const Publisherhome = () => {
                           src={book.book_cover_image || "path/to/fallback-image.jpg"}
                           alt={book.book_description || "No description available"}
                         />
-                        <h4 className="chaitary">{book.book_description || "No Title Available"}</h4>
+                        <h4 className="chaitary">{book.book_titile || "No Title Available"}</h4>
                       </Link>
                     </center>
                   </div>

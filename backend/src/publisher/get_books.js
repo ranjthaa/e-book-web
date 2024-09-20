@@ -44,7 +44,7 @@ const getBooks = (req, res) => {
             book.book_id                = element.id;
             book.publisher_id           = element.publisher_id;
             book.publisher_name         = element.publisher_name;
-            book.book_title             = element.book_title;
+            book.book_titile             = element.book_titile;
             book.book_description       = element.book_description;
             book.book_cover_image       = SITE_COVER_IMAGE_URL + element.book_cover_image;
             book.book_pdf               = SITE_BOOK_URL        + element.book_pdf;
