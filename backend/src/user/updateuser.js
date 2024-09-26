@@ -5,8 +5,8 @@ const mysql   = require('../database/connection');
 var fileName="";
 const storage = multer.diskStorage({
 
-  // destination: (req, file, cb) => { cb(null, 'C:\\e-book\\web\\e-book\\backend\\src\\publisher\\uploads\\profile_images\\'); },
-  destination: (req, file, cb) => { cb(null, 'C:\\e-book-new\\e-book-web\\backend\\src\\publisher\\uploads\\profile_images\\'); },
+  destination: (req, file, cb) => { cb(null, 'C:\\e-book\\web\\e-book\\client\\e-book-web\\backend\\src\\publisher\\uploads\\profile_images\\'); },
+  // destination: (req, file, cb) => { cb(null, 'C:\\e-book-new\\e-book-web\\backend\\src\\publisher\\uploads\\profile_images\\'); },
 
   filename: (req, file, cb) => {
 
