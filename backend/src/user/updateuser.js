@@ -33,11 +33,14 @@ function chagneProfileImage(req, res) {
             return res.status(400).send({status:400, error: 'Content or image data missing'});
           }
 
+          console.log(user_id)
+
           const sql = `update signup set profile_photo = '${fileName}' where id = ${user_id}`;
 
           mysql.query(sql, (err, result) => {
 
             if (err) {
+              console.log(err)
               return res.status(500).send({status:500, message: 'Error inserting data into database' });
             }
 

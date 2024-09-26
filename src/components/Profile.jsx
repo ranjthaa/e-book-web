@@ -11,15 +11,17 @@ const Profile = () => {
     profile: profileimage, // Default profile image
   });
 
-  // Load profile image from localStorage on component mount
+  // Load profile data from localStorage on component mount
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem("data"));
-    const storedProfileImage = localStorage.getItem("profileImage");
+    const storedProfileImage = storedUserData.profile;
+    console.log(storedUserData.profile);
     
+
     if (storedUserData) {
       setProfileData({
         ...storedUserData,
-        profile: storedProfileImage || profileimage, // Use stored image if available
+        profile: storedProfileImage ? storedProfileImage : profileimage, // Use stored image if available, else default
       });
     }
   }, []);
@@ -32,23 +34,45 @@ const Profile = () => {
     }));
   };
 
-  // Function to convert the uploaded image to a base64 string
+  // Function to handle image change and upload it to the backend
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
 
-    reader.onloadend = () => {
-      const base64String = reader.result;
-      setProfileData((prevData) => ({
-        ...prevData,
-        profile: base64String, // Update the profile image
-      }));
-      localStorage.setItem("profileImage", base64String); // Save the base64 string to localStorage
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profile', file);  // Append the file to FormData
+    formData.append('user_id', profileData.id);  // Append the user_id
+console.log(profileData.id);
+
+    // Send POST request to the backend to update profile image
+    const updateProfileImage = async () => {
+      try {
+        const response = await fetch("http://localhost:2000/user/update_profile_image", {
+          method: "POST",
+          body: formData,  // Send the FormData
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert("Profile image updated successfully!");
+
+          // Update the profile image in the frontend with the URL returned by the backend
+          setProfileData((prevData) => ({
+            ...prevData,
+            profile: result.image,  // Update the profile image with the URL from the backend
+          }));
+
+          localStorage.setItem("profileImage", result.image); // Save the profile image URL to localStorage
+        } else {
+          alert(`Error: ${result.message}`);
+        }
+      } catch (error) {
+        alert("Failed to update profile image. Please try again.");
+      }
     };
 
-    if (file) {
-      reader.readAsDataURL(file); // Convert image to base64
-    }
+    updateProfileImage();  // Call the function to upload the image
   };
 
   const handleUpdate = (e) => {

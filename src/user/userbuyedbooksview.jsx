@@ -6,7 +6,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css'; 
 
-const Userviewbook = () => {
+const Userbuyedviewbook = () => {
   const { book_id } = useParams();
   const [bookDetails, setBookDetails] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -68,106 +68,7 @@ const [pdfUrl, setPdfUrl] = useState("");
     }
   };
 
-  const initPayment = () => {
-    const options = {
-      key: "rzp_test_3odnVFzUBOioFh",
-      amount: bookDetails.price * 100,
-      currency: "INR",
-      name: bookDetails.name,
-      description: "Test Transaction",
-      image: bookDetails.book_cover_image,
-      handler: async (response) => {
-        try {
-          const storedUserData = JSON.parse(localStorage.getItem("data"));
-          const user_id = storedUserData?.id;
 
-          const paymentDetails = {
-            user_id: user_id,
-            publisher_id: bookDetails.publisher_id,
-            book_id: book_id,
-            price: bookDetails.price,
-            transaction_id: response.razorpay_payment_id
-          };
-
-          const verifyUrl = "http://localhost:2000/user/buy_book";
-          const verifyResponse = await axios.post(verifyUrl, paymentDetails, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-
-          if (verifyResponse.data && verifyResponse.data.status === 200) {
-            console.log("Payment and order recorded successfully:", verifyResponse.data);
-            alert("Payment successful and order recorded!");
-            setIsPurchased(true); // Set to true after successful purchase
-            setPaymentStatus(true); // Update paymentStatus to true
-          } else {
-            console.error("Error recording payment:", verifyResponse.data.message);
-            alert("Failed to record payment.");
-          }
-        } catch (error) {
-          console.error("Error handling payment:", error);
-          alert("Payment failed.");
-        }
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
-  };
-
-  const handleAddToFavorites = async () => {
-    try {
-      const storedUserData = JSON.parse(localStorage.getItem("data"));
-      const user_id = storedUserData?.id;
-
-      const queryString = `?book_id=${book_id}&user_id=${user_id}`;
-      const response = await axios.post(`http://localhost:2000/user/save_book${queryString}`, {}, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.data) {
-        setIsFavorite(true);
-        alert("Book added to favourites successfully!");
-      } else {
-        console.log("Response error:", response.data);
-        alert("Failed to add book to favourites.");
-      }
-    } catch (error) {
-      console.error("Error adding book to favourites:", error);
-      alert("Failed to add book to favourites.");
-    }
-  };
-
-  const handleRemoveFromFavorites = async () => {
-    try {
-      const storedUserData = JSON.parse(localStorage.getItem("data"));
-      const user_id = storedUserData?.id;
-
-      const queryString = `?book_id=${book_id}&user_id=${user_id}`;
-      const response = await axios.post(`http://localhost:2000/user/remove_saved_book${queryString}`, {}, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.data) {
-        setIsFavorite(false);
-        alert("Book removed from favourites successfully!");
-      } else {
-        console.log("Response error:", response.data);
-        alert("Failed to remove book from favourites.");
-      }
-    } catch (error) {
-      console.error("Error removing book from favourites:", error);
-      alert("Failed to remove book from favourites.");
-    }
-  };
 
   const handleReadDemoClick = () => {
     setPdfUrl(bookDetails.demo_book);
@@ -203,27 +104,9 @@ const [pdfUrl, setPdfUrl] = useState("");
               <button className="omed" onClick={handleReadDemoClick}>
                 Read Demo
               </button>
-
-              {isFavorite ? (
-                <button className="omed" onClick={handleRemoveFromFavorites}>
-                  Remove from Favourites
-                </button>
-              ) : (
-                <button className="omed" onClick={handleAddToFavorites}>
-                  Add to Favourites
-                </button>
-              )}
-
-              {/* Conditionally render the Buy Now or Read Book button */}
-              {isPurchased ? (
-                <button className="omed" onClick={handleReadBookClick}>
+              <button className="omed" onClick={handleReadBookClick}>
                   Read Book
                 </button>
-              ) : (
-                <button className="omed" onClick={initPayment}>
-                  Buy Now
-                </button>
-              )}
             </div>
           </div>
         ) : (
@@ -249,4 +132,4 @@ const [pdfUrl, setPdfUrl] = useState("");
   );
 };
 
-export default Userviewbook;
+export default Userbuyedviewbook;

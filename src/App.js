@@ -24,6 +24,7 @@ import Adminviewbook from './admin/adminviewbook.jsx';
 import Publisherbuyedbooks from './publisher/buyedbooks.jsx';
 import Addcategory from './publisher/addcategory.jsx';
 import CategoryBooks from './user/categorybooks.js';
+import Userbuyedviewbook from './user/userbuyedbooksview.jsx';
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -130,6 +131,7 @@ function App() {
             <Route path="/userhome" element={<Userhome />} />
             <Route path="/category/:category_name" element={<CategoryBooks />} />
             <Route path="/userviewbook/:book_id" element={<Userviewbook />} />
+            <Route path="/userbuyedviewbook/:book_id" element={<Userbuyedviewbook />} />
             <Route path="/usersavedbooks" element={<Usersavedbooks />} />
             <Route path="/userbuyedbooks" element={<Userbuyedbooks />} />
           </>
