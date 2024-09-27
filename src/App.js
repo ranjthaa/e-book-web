@@ -28,9 +28,8 @@ import Userbuyedviewbook from './user/userbuyedbooksview.jsx';
 
 function App() {
   const [userRole, setUserRole] = useState(null);
-  const [loading, setLoading] = useState(true); // To manage loading state
+  const [loading, setLoading] = useState(true);
 
-  // Load user role from localStorage on component mount
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem("data"));
     if (storedUserData) {
@@ -40,35 +39,8 @@ function App() {
                    null;
       setUserRole(role);
     }
-    setLoading(false); // Loading is done
+    setLoading(false);
   }, []);
-
-  // useEffect(() => {
-  //   const handleContextMenu = (e) => e.preventDefault();
-  //   document.addEventListener('contextmenu', handleContextMenu);
-
-  //   return () => {
-  //     document.removeEventListener('contextmenu', handleContextMenu);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const handleBlur = () => {
-  //     document.body.style.filter = 'blur(8px)';
-  //   };
-
-  //   const handleFocus = () => {
-  //     document.body.style.filter = 'none';
-  //   };
-
-  //   window.addEventListener('blur', handleBlur);
-  //   window.addEventListener('focus', handleFocus);
-
-  //   return () => {
-  //     window.removeEventListener('blur', handleBlur);
-  //     window.removeEventListener('focus', handleFocus);
-  //   };
-  // }, []);
 
   const handleLogin = (userData) => {
     const role = userData.user_type === 111 ? 'admin' :
@@ -77,7 +49,6 @@ function App() {
                  null;
 
     setUserRole(role);
-    // Save user type and data to localStorage
     localStorage.setItem("data", JSON.stringify(userData));
   };
 
@@ -87,9 +58,29 @@ function App() {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading message while determining if user is logged in
+    return <div>Loading...</div>;
   }
 
+  // Redirect to profile if user is logged in, or to login if not
+  const RedirectBasedOnLogin = () => {
+    const storedUserData = JSON.parse(localStorage.getItem("data"));
+  
+    if (storedUserData) {
+      const userRole = storedUserData.user_type;
+  
+      if (userRole === 111) {
+        return <Navigate to="/adminhome" />;
+      } else if (userRole === 110) {
+        return <Navigate to="/publisherhome" />;
+      } else if (userRole === 100) {
+        return <Navigate to="/userhome" />;
+      }
+    }
+  
+    // If no user data is found, redirect to the login page
+    return <Navigate to="/login" />;
+  };
+  
   return (
     <Router>
       {/* Conditionally render the navbar based on the user's role */}
@@ -98,7 +89,9 @@ function App() {
       {userRole === 'user' && <Usernavbar onLogout={handleLogout} />}
 
       <Routes>
-        <Route path="/" element={userRole ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
+        {/* Redirect to profile if user is logged in, else show login */}
+        <Route path="/" element={<RedirectBasedOnLogin />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
 
@@ -137,8 +130,8 @@ function App() {
           </>
         )}
 
-        {/* Redirect to login if no user is logged in */}
-        <Route path="*" element={userRole ? <Navigate to="/" /> : <Navigate to="/login" />} />
+        {/* Default redirect to login if no matching route */}
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );
