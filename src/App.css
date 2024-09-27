@@ -97,7 +97,7 @@ a:focus {
 }
 
 .header_section {
-  background-color: #063547;
+  background-color: #c11a9a;
   padding: 8px 0;
 }
 
@@ -1177,4 +1177,10 @@ top: 20px;
 
 .rpv-core__icon{
   display: none !important;
+
+}
+
+.lo-im{
+  margin-bottom: 20px;
+  border-radius: 10%;
 }

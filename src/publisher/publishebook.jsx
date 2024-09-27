@@ -111,30 +111,30 @@ const Publishebook = () => {
               <form onSubmit={handleSubmit}>
                 <div>
                   <label>Book Image</label>
-                  <input type="file" name="cover_image" accept="image/*" onChange={handleFileChange} />
+                  <input type="file" name="cover_image" accept="image/*" onChange={handleFileChange} required />
                 </div>
                 <div>
-                  <input type="text" name="book_titile" placeholder="Book Title" value={formData.book_titile} onChange={handleChange} />
+                  <input type="text" name="book_titile" placeholder="Book Title" value={formData.book_titile} onChange={handleChange} required />
                 </div>
                 <div>
-                  <textarea className='book-pub-add' name="book_description" placeholder="Book Description" value={formData.book_description} onChange={handleChange} />
+                  <textarea className='book-pub-add' name="book_description" placeholder="Book Description" value={formData.book_description} onChange={handleChange} required />
                 </div>
                 <div>
                   <label>Upload PDF</label>
-                  <input type="file" name="book" accept="application/pdf" onChange={handleFileChange} />
+                  <input type="file" name="book" accept="application/pdf" onChange={handleFileChange} required />
                 </div>
                 <div>
                   <label>Demo Book</label>
-                  <input type="file" name="demo_file" accept="application/pdf" onChange={handleFileChange} />
+                  <input type="file" name="demo_file" accept="application/pdf" onChange={handleFileChange} required />
                 </div>
                 <div>
-                  <input type="text" name="auther_name" placeholder="Author Name" value={formData.auther_name} onChange={handleChange} />
+                  <input type="text" name="auther_name" placeholder="Author Name" value={formData.auther_name} onChange={handleChange} required />
                 </div>
                 <div>
-                  <input type="text" name="publisher_name" placeholder="Publisher Name" value={formData.publisher_name} onChange={handleChange} />
+                  <input type="text" name="publisher_name" placeholder="Publisher Name" value={formData.publisher_name} onChange={handleChange} required />
                 </div>
                 <div>
-                  <input type="number" name="year_of_the_book" placeholder="Year" value={formData.year_of_the_book} onChange={handleChange} />
+                  <input type="number" name="year_of_the_book" placeholder="Year" value={formData.year_of_the_book} onChange={handleChange} required />
                 </div>
                 <div>
                   {/* <label>Category</label> <br></br> */}

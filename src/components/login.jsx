@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import readingbook from '../Images/online-reading.jpg';
+import readingbook from '../Images/app_logo.jpeg';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -36,9 +36,11 @@ const Login = ({ onLogin }) => {
     <section className="contact_section layout_padding">
       <div className="container">
         <div className="row">
+        <center><h2>Login</h2></center>
+        <center><img width={150} className='lo-im' src={ readingbook} alt="" /></center>
+        <div className='col-md-3'></div>
           <div className="col-md-6">
             <div className="heading_container">
-              <h2>Login</h2>
             </div>
             <form onSubmit={handleSubmit}>
               <div>
@@ -74,10 +76,10 @@ const Login = ({ onLogin }) => {
               </div>
             </form>
           </div>
-          <div className="col-md-6">
-            <div className="img-box">
+          <div className="col-md-3">
+            {/* <div className="img-box">
               <img className="bok-rea-login" src={readingbook} alt="Reading Book" />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
