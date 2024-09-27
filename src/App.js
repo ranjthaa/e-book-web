@@ -43,32 +43,32 @@ function App() {
     setLoading(false); // Loading is done
   }, []);
 
-  // useEffect(() => {
-  //   const handleContextMenu = (e) => e.preventDefault();
-  //   document.addEventListener('contextmenu', handleContextMenu);
+  useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault();
+    document.addEventListener('contextmenu', handleContextMenu);
 
-  //   return () => {
-  //     document.removeEventListener('contextmenu', handleContextMenu);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   const handleBlur = () => {
-  //     document.body.style.filter = 'blur(8px)';
-  //   };
+  useEffect(() => {
+    const handleBlur = () => {
+      document.body.style.filter = 'blur(8px)';
+    };
 
-  //   const handleFocus = () => {
-  //     document.body.style.filter = 'none';
-  //   };
+    const handleFocus = () => {
+      document.body.style.filter = 'none';
+    };
 
-  //   window.addEventListener('blur', handleBlur);
-  //   window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('focus', handleFocus);
 
-  //   return () => {
-  //     window.removeEventListener('blur', handleBlur);
-  //     window.removeEventListener('focus', handleFocus);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
 
   const handleLogin = (userData) => {
     const role = userData.user_type === 111 ? 'admin' :
