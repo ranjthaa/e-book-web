@@ -1,10 +1,13 @@
 const multer = require("multer");
 const mysql = require("../database/connection");
+const path = require('path');
+
+const categoryImagePath = path.join(__dirname, 'uploads/category_images');
 
 var fileName="";
 const storage = multer.diskStorage({
 
-  destination: (req, file, cb) => { cb(null, 'C:\\VEERAMANI\\book\\e-book\\backend\\src\\uploads\\category_images\\'); },
+  destination: (req, file, cb) => { cb(null, categoryImagePath ); },
 
   filename: (req, file, cb) => {
 

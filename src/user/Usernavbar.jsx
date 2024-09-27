@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import 'primeicons/primeicons.css';
+import readingbook from '../Images/app_logo.jpeg';
+// import readingbook from '../Images/online-reading.jpg';
         
  // Import Link from react-router-dom
 
@@ -10,7 +12,7 @@ const Navbar = () => {
       <div className="container">
         <nav className="navbar navbar-expand-lg custom_nav-container">
           <Link className="navbar-brand" to="/userhome">
-            <span>Medical E-Book</span>
+            <span><img src={readingbook} width={60} alt="" /></span><span>Medical E-Book</span>
           </Link>
 
           <button
